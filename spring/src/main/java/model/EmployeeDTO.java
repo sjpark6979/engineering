@@ -10,6 +10,8 @@ public class EmployeeDTO {
 	String empDeptNumber;
 	String empEmail;
 	String empPhoneNumber;
+	Date hireDate;
+	Long salary;
 	
 	public Long getEmpNo() {
 		return empNo;
@@ -65,7 +67,5 @@ public class EmployeeDTO {
 	public void setSalary(Long salary) {
 		this.salary = salary;
 	}
-	Date hireDate;
-	Long salary;
 	
 }
