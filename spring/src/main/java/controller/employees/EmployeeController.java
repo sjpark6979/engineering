@@ -54,7 +54,7 @@ public class EmployeeController {
 		employeeService.insertEmp(employeeCommand);
 		return "redirect:empList";
 	}
-	@RequestMapping("/empInfo")
+	@RequestMapping("empInfo")
 	public String empInfo(@RequestParam(value="empNo") String empNo, Model model) {
 		employeeInfoService.empInfo(empNo, model);
 		System.out.println(empNo);

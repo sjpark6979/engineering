@@ -14,9 +14,8 @@
 부서명 : ${emp.empDeptNumber}<br/>
 이메일 : ${emp.empEmail}<br/>
 연락처 : ${emp.empPhoneNumber}<br/>
-입사일 : <fmt:formatDate value="${emp.hireDate}" type="date"/><br/>
+입사일 : <fmt:formatDate value="${emp.hireDate}" type="date" pattern="yy/MM/dd"/><br/>
 급여 : ${emp.salary}<br/>
 <a href="empModify?empNo=${emp.empNo}">수정</a>
-
 </body>
 </html>
