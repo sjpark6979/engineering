@@ -15,6 +15,7 @@ public class ProductAutoNumService {
 		String autoNum = productRepository.autoNum();
 		List<CatDTO> list = productRepository.catList();
 		model.addAttribute("autoNum", autoNum);
+		System.out.println(list.size());
 		model.addAttribute("lists", list); 
 	}
 }

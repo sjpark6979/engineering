@@ -17,10 +17,11 @@ import repository.ProductRepository;
 public class ProductJoinService {
 	@Autowired
 	ProductRepository productRepository;
-	
-	public void prodJoin(ProductCommand productCommand, HttpSession session) {
-		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
-		String empNo = authInfo.getGrade();
+	public void prodJoin(ProductCommand productCommand,
+			HttpSession session) {
+		AuthInfo authInfo = 
+				(AuthInfo)session.getAttribute("authInfo");
+		String empNo =  authInfo.getGrade();
 		
 		ProductDTO dto = new ProductDTO();
 		dto.setCatNum(productCommand.getCatNum());
@@ -29,31 +30,33 @@ public class ProductJoinService {
 		dto.setProdName(productCommand.getProdName());
 		dto.setProdNo(productCommand.getProdNo());
 		dto.setProdPrice(productCommand.getProdPrice());
-		//파일처리
+		// 파일 처리
 		String path = "WEB-INF/view/product/upload";
-		String filePath = session.getServletContext().getRealPath(path);
+		String filePath = 
+				session.getServletContext().getRealPath(path);
 		System.out.println(filePath);
 		String goodsImage = "";
-		if(productCommand.getProdImage() != null) {
-			// 파일저장에 관한 코드
+		if(productCommand.getProdImage()!=null) {
+			//                     MultipartFile [] prodImage
 			for(MultipartFile mf : productCommand.getProdImage()) {
-				
-				// 확장자 가져오기
 				String original = mf.getOriginalFilename();
-				String originalExt = original.substring(original.lastIndexOf("."));
-				String store = UUID.randomUUID().toString().replace("-", "")
-						+ originalExt;
-				goodsImage += store + ",";
-				
-				// 파일저장
-				File file = new File(filePath + "/" + store);
+				// 확장자 가져오기
+				String originalExt = 
+						original.substring(original.lastIndexOf("."));
+				/// 저장할 파일명 만들기
+				String store = 
+						UUID.randomUUID().toString().replace("-", "")
+						+originalExt;
+				goodsImage += store +",";
+				/// 파일저장
+				File file = new File(filePath+"/"+store);
 				try {
-				mf.transferTo(file);
-				}catch (IllegalStateException e) {
+					mf.transferTo(file);
+				} catch (IllegalStateException e) {
 					e.printStackTrace();
-				}catch(IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
-				}
+				} 
 			}
 		}
 		dto.setProdImage(goodsImage);

@@ -98,7 +98,7 @@ public class MemberController {
 		memberDetailService.memInfo(session, model);
 		return "member/memUpdate";
 	}
-	@RequestMapping("memberUpdateOk")
+	@RequestMapping("memUpdateOk")
 	public String updateOk(MemberCommand memberCommand, HttpSession session) {
 		int i = memberUpdateService.memUpdate(memberCommand, session);
 		if(i == 1) {

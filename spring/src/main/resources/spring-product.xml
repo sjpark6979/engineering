@@ -8,4 +8,8 @@
 		<bean id="productAutoNumService" class="service.product.ProductAutoNumService" />
 		<bean class="repository.ProductRepository"/>
 		<bean class="service.product.ProductJoinService" />
+		<bean class="service.product.ProductListService" />
+		<bean class="service.product.ProductInfoService" />
+		<bean class="service.product.ProductModifyService"/>
+		<bean class="service.product.ProductDeleteService"/>
 </beans>
