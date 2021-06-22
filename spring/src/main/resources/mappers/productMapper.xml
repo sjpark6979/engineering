@@ -3,51 +3,31 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.productMapper">
 
-<select id="autoNum" resultType="string" >
-	select GOODS_NUM.nextval from dual
-</select>
-
-<select id="catList" resultType="model.CatDTO">
-	select cat_num catNum, cat_type catType, cat_name catName from category
-</select>
-
-<insert id="cartInsert" parameterType="model.CartDTO" >
-	merge into cart c
-	using (select PROD_NO from product where PROD_NO = #{prodNo} ) p
-	on (c.prod_no = p.prod_no and memb_id = #{membId})
-	when matched then
-	update set cart_qty = cart_qty + #{cartQty}, CART_PRICE = CART_PRICE + #{cartPrice}
-	when not matched then
-	insert (MEMB_ID, PROD_NO, CAT_NUM, CART_QTY, CART_PRICE)
-	values(#{membId},#{prodNo},#{catNum},#{cartQty},#{cartPrice})
-</insert>
-
 <insert id="prodInsert" parameterType="model.ProductDTO">
 	insert into product(PROD_NO, CAT_NUM, PROD_NAME, PROD_PRICE, PROD_INFO, PROD_IMAGE, EMP_NO)
 	values(#{prodNo},#{catNum},#{prodName},#{prodPrice},#{prodInfo},#{prodImage},#{empNo}) 
 </insert>
 
-<select id="prodList" resultType="model.ProductDTO">
-	select PROD_NO prodNo, CAT_NUM catNum, PROD_NAME prodName, 
-	       PROD_PRICE prodPrice, PROD_INFO prodInfo, PROD_IMAGE prodImage, 
-	       EMP_NO empNo
-	from product
-</select>
+<update id="prodUpdate">
+	update product
+	set PROD_NAME = #{prodName}, PROD_PRICE = #{prodPrice}, PROD_INFO = #{prodInfo}
+	where PROD_NO = #{prodNo}
+</update>
 
 <select id="memCart" parameterType="string" resultType="string">
 	select prod_no from cart where memb_id = #{membId}
 </select>
 
 <resultMap type="model.ProductCartDTO" id="productCartMap">
-	<association property="productDTO" javaType="model.productDTO">
-		<result column="prod_name" jdbcType="varchar" property="prodName"/>
-		<result column="prod_price" jdbcType="varchar" property="prodPrice"/>
+	<association property="productDTO" javaType="model.ProductDTO">
+		<result column="prod_name" jdbcType="VARCHAR" property="prodName"/>
+		<result column="prod_price" jdbcType="VARCHAR" property="prodPrice"/>
 	</association>
-	<association property="cartDTO" javaType="model.cartDTO">
-		<id column="memb_id" jdbcType="varchar" property="membId"/>
-		<id column="prod_no" jdbcType="varchar" property="prodNo"/>
-		<result column="cart_qty" jdbcType="varchar" property="cartQty"/>
-		<result column="cart_price" jdbcType="varchar" property="cartPrice"/>
+	<association property="cartDTO" javaType="model.CartDTO">
+		<id column="memb_id" jdbcType="VARCHAR" property="membId"/>
+		<id column="prod_no" jdbcType="VARCHAR" property="prodNo"/>
+		<result column="cart_qty" jdbcType="VARCHAR" property="cartQty"/>
+		<result column="cart_price" jdbcType="VARCHAR" property="cartPrice"/>
 	</association>
 </resultMap>
 
@@ -58,6 +38,22 @@
 	where p.prod_no = c.prod_no and c.memb_id = #{membId} and c.prod_no = #{prodNo}
 </select>
 
+<insert id="cartInsert" parameterType="model.CartDTO" >
+	merge into cart c
+	using (select PROD_NO from product where PROD_NO = #{prodNo} ) p
+	on (c.prod_no = p.prod_no and memb_id = #{membId})
+	When matched then
+	update set cart_qty = cart_qty + #{cartQty}, CART_PRICE = CART_PRICE + #{cartPrice}
+	When not matched then
+	insert (MEMB_ID, PROD_NO, CAT_NUM, CART_QTY, CART_PRICE)
+	values(#{membId},#{prodNo},#{catNum},#{cartQty},#{cartPrice})
+</insert>
+
+<delete id="prodDelete" parameterType="string">
+	delete from product
+	where PROD_NO = #{prodNo}
+</delete>
+
 <select id="prodInfo" parameterType="String" resultType="model.ProductDTO">
 	select PROD_NO prodNo, CAT_NUM catNum, PROD_NAME prodName, 
 	       PROD_PRICE prodPrice, PROD_INFO prodInfo, PROD_IMAGE prodImage, 
@@ -66,15 +62,18 @@
 	where PROD_NO = #{prodNo}
 </select>
 
-<update id="prodUpdate">
-	update product
-	set PROD_NAME = #{prodName}, PROD_PRICE = #{prodPrice}, PROD_INFO = #{prodInfo}
-	where PROD_NO = #{prodNo}
-</update>
+<select id="prodList" resultType="model.ProductDTO">
+	select PROD_NO prodNo, CAT_NUM catNum, PROD_NAME prodName, 
+	       PROD_PRICE prodPrice, PROD_INFO prodInfo, PROD_IMAGE prodImage, 
+	       EMP_NO empNo
+	from product
+</select>
 
-<delete id="prodDelete" parameterType="string">
-	delete from product
-	where PROD_NO = #{prodNo}
-</delete>
+<select id="autoNum" resultType="string" >
+	select GOODS_NUM.nextval from dual
+</select>
 
+<select id="catList" resultType="model.CatDTO">
+	select cat_num catNum, cat_type catType, cat_name catName from category
+</select>
 </mapper>

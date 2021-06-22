@@ -51,7 +51,7 @@
 	<tr>
 	<c:forEach items="${prodList }" var="dto" varStatus="cnt">
 		<td>
-		<a href="prod/prodInfo?prodNo=${dto.prodNo }">
+		<a href="prod/prodInfo?prodNo=${dto.prodNo}">
 		<img width= "200"  src='../product/upload/${dto.prodImage.split(",")[0]}'/><br/>
 		${dto.prodName }<br/>
 		${dto.prodPrice }원
