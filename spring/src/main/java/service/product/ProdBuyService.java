@@ -13,22 +13,22 @@ import model.CartDTO;
 import model.ProductCartDTO;
 import repository.ProductRepository;
 
-public class CartListService {
+public class ProdBuyService {
 	@Autowired
 	ProductRepository productRepository;
-	
-	public void cartList(HttpSession session, Model model) {
+	public void prodBuy(HttpSession session, String [] prodChk, Model model) {
+		
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		String membId = authInfo.getUserId();
-		List<String> list = productRepository.memCart(membId);
-		List<ProductCartDTO> dtos = new ArrayList<ProductCartDTO>();
-		for(String prodNo : list) {
+		List<ProductCartDTO> list = new ArrayList<ProductCartDTO>();
+		
+		for(String prodNo : prodChk) {
 			CartDTO dto = new CartDTO();
-			dto.setProdNo(prodNo);
 			dto.setMembId(membId);
-			ProductCartDTO productCartDTO = productRepository.cartList(dto);
-			dtos.add(productCartDTO);
+			dto.setProdNo(prodNo);
+			ProductCartDTO dto1 = productRepository.cartList(dto);
+			list.add(dto1);
 		}
-		model.addAttribute("list",dtos);
+		model.addAttribute("list",list);
 	}
 }

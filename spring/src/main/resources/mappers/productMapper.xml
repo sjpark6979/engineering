@@ -8,6 +8,13 @@
 	values(#{prodNo},#{catNum},#{prodName},#{prodPrice},#{prodInfo},#{prodImage},#{empNo}) 
 </insert>
 
+<update id="cartQtyDown" parameterType="model.CartDTO">
+	update cart
+	set cart_qty = cart_qty - 1, 
+		cart_price = cart_price - #{cartPrice}
+	where memb_id = #{membId} and prod_no = #{prodNo}
+</update>
+
 <update id="prodUpdate">
 	update product
 	set PROD_NAME = #{prodName}, PROD_PRICE = #{prodPrice}, PROD_INFO = #{prodInfo}
@@ -18,6 +25,7 @@
 	select prod_no from cart where memb_id = #{membId}
 </select>
 
+<!-- selectList를 사용할 수 없다 (selectOne은 사용가능) -->
 <resultMap type="model.ProductCartDTO" id="productCartMap">
 	<association property="productDTO" javaType="model.ProductDTO">
 		<result column="prod_name" jdbcType="VARCHAR" property="prodName"/>

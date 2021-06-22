@@ -10,7 +10,7 @@
 <script>
 	function cartAdd(prodNo,prodPrice,catNum){
 		if(${authInfo == null}){
-			alert("로그인필요");
+			alert("로그인이 필요합니다.");
 			location.href="../";
 			return false;
 		}else{

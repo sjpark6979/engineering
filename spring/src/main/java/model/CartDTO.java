@@ -5,7 +5,7 @@ String membId;
 String prodNo;
 String catNum;
 String cartQty;
-String prodPrice;
+String cartPrice;
 public String getMembId() {
 	return membId;
 }
@@ -31,10 +31,10 @@ public void setCartQty(String cartQty) {
 	this.cartQty = cartQty;
 }
 public String getCartPrice() {
-	return prodPrice;
+	return cartPrice;
 }
-public void setCartPrice(String prodPrice) {
-	this.prodPrice = prodPrice;
+public void setCartPrice(String cartPrice) {
+	this.cartPrice = cartPrice;
 }
 
 }

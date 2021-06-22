@@ -43,6 +43,7 @@
 <c:if test="${authInfo.grade == 1 }">
 <!-- 사용자 로그인 -->
 	<a href="member/memMyPage">마이페이지</a> 
+	<a href="prod/cartList">장바구니</a>
 </c:if>
 <a href="logout">로그아웃</a>
 </c:if>
@@ -52,7 +53,7 @@
 	<c:forEach items="${prodList }" var="dto" varStatus="cnt">
 		<td>
 		<a href="prod/prodInfo?prodNo=${dto.prodNo}">
-		<img width= "200"  src='../product/upload/${dto.prodImage.split(",")[0]}'/><br/>
+		<img width= "200"  src="product/upload/${dto.prodImage.split(',')[0]}"/><br/>
 		${dto.prodName }<br/>
 		${dto.prodPrice }원
 		</a>
